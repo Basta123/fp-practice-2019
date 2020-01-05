@@ -16,8 +16,7 @@ cos :: Double -> Double
 cos x = todo
 
 -- наибольший общий делитель двух чисел
-gcd :: Integer -> Integer -> Integer
-gcd x y = todo
+
 
 -- существует ли полный целочисленный квадрат в диапазоне [from, to)?
 doesSquareBetweenExist :: Integer -> Integer -> Bool
@@ -31,11 +30,16 @@ isDateCorrect day month year = todo
 -- возведение числа в степень, duh
 -- готовые функции и плавающую арифметику использовать нельзя
 pow :: Integer -> Integer -> Integer
-pow x y = todo
+pow x y  
+    | y == 0 && x == 0 = error "not correct"
+    | y == 0 = 1
+    | x == 0 = 0
+    | y == 1 = x
+    | otherwise = x * pow x (y-1)
 
 -- является ли данное число простым?
 isPrime :: Integer -> Bool
-isPrime x = todo
+isPrime x = if x > 1 then null [ y | y <- [2..x - 1], x `mod` y == 0] else False
 
 type Point2D = (Double, Double)
 

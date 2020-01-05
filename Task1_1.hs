@@ -7,19 +7,26 @@ module Task1_1 where
 
 import Todo(todo)
 
+data Operators = Plus | Subtraction | Multiply deriving (Show, Eq)
+
 data Term = IntConstant{ intValue :: Int }           -- числовая константа
             | Variable{ varName :: String }          -- переменная
-            | BinaryTerm{ lhv :: Term, rhv :: Term } -- бинарная операция
+            | BinaryTerm{ lhv :: Term, op :: Operators, rhv :: Term } -- бинарная операция
             deriving(Show,Eq)
 
 -- Для бинарных операций необходима не только реализация, но и адекватные
 -- ассоциативность и приоритет
 (|+|) :: Term -> Term -> Term
-(|+|) l r = todo
+(|+|) l r = BinaryTerm l Plus r 
+infixl 6 |+|
+
 (|-|) :: Term -> Term -> Term
-(|-|) l r = todo
+(|-|) l r = BinaryTerm l Subtraction r 
+infixl 6 |-|
+
 (|*|) :: Term -> Term -> Term
-(|*|) l r = todo
+(|*|) l r = BinaryTerm l Multiply r
+infixl 7 |*|
 
 -- Заменить переменную `varName` на `replacement`
 -- во всём выражении `expression`

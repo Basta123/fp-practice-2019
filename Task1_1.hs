@@ -28,12 +28,31 @@ infixl 6 |-|
 (|*|) l r = BinaryTerm l Multiply r
 infixl 7 |*|
 
+
+
+
+
+
+
+
 -- Заменить переменную `varName` на `replacement`
 -- во всём выражении `expression`
-replaceVar :: String -> Term -> Term -> Term
-replaceVar varName replacement expression = todo
+replaceVar varName replacement expression = 
+        case expression of
+            Variable var 
+              | var == varName -> replacement
+              | otherwise -> expression
+            BinaryTerm l op r -> BinaryTerm (replaceVar varName replacement l) op (replaceVar varName replacement r)  
+            _ -> expression
+
+
+
 
 -- Посчитать значение выражения `Term`
 -- если оно состоит только из констант
 evaluate :: Term -> Term
-evaluate expression = todo
+evaluate (BinaryTerm lhv Plus rhv)         = (|+|) (evaluate lhv) (evaluate rhv)
+evaluate (BinaryTerm lhv Subtraction rhv)  = (|-|) (evaluate lhv) (evaluate rhv)
+evaluate (BinaryTerm lhv Multiply rhv)     = (|*|) (evaluate lhv) (evaluate rhv)
+evaluate (IntConstant value)                 = IntConstant value
+evaluate _                                 = error "undefined"   

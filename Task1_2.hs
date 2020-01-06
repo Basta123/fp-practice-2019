@@ -1,5 +1,7 @@
 module Task1_2 where
 
+import Prelude hiding (gcd)
+
 {-
   Задание 1.2
   Необходимо реализовать четыре любые функции в данном файле
@@ -15,17 +17,24 @@ sin x = todo
 cos :: Double -> Double
 cos x = todo
 
--- наибольший общий делитель двух чисел
+-- наибольший общий делитель двух чисел		
+gcd :: Integer -> Integer -> Integer
+gcd x 0 = x
+gcd 0 x = x
+gcd n m = let a = abs n
+              b = abs m
+		  in gcd (b `mod` a) a	
 
 
 -- существует ли полный целочисленный квадрат в диапазоне [from, to)?
 doesSquareBetweenExist :: Integer -> Integer -> Bool
-doesSquareBetweenExist from to = todo
+doesSquareBetweenExist from to = (ceiling (sqrt (fromIntegral from))) <= (floor (sqrt (fromIntegral to)))
 
 -- является ли дата корректной с учётом количества дней в месяце и
 -- вискокосных годов?
 isDateCorrect :: Integer -> Integer -> Integer -> Bool
 isDateCorrect day month year = todo
+
 
 -- возведение числа в степень, duh
 -- готовые функции и плавающую арифметику использовать нельзя

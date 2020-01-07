@@ -23,7 +23,7 @@ gcd x 0 = x
 gcd 0 x = x
 gcd n m = let a = abs n
               b = abs m
-		  in gcd (b `mod` a) a	
+          in gcd (b `mod` a) a
 
 
 -- существует ли полный целочисленный квадрат в диапазоне [from, to)?
@@ -51,7 +51,6 @@ isPrime :: Integer -> Bool
 isPrime x = if x > 1 then null [ y | y <- [2..x - 1], x `mod` y == 0] else False
 
 type Point2D = (Double, Double)
-
 -- рассчитайте площадь многоугольника по формуле Гаусса
 -- многоугольник задан списком координат
 shapeArea :: [Point2D] -> Double

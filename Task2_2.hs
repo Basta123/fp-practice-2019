@@ -12,13 +12,18 @@ import Prelude hiding (foldl, foldr, unfoldr, map, concatMap,
     filter, maxBy, minBy, reverse, sum, product, elem)
 
 foldl :: (b -> a -> b) -> b -> [a] -> b
-foldl = todo
+foldl f ini [] = ini
+foldl f ini (x:xs) = foldl f (f ini x) xs
 
 foldr :: (a -> b -> b) -> b -> [a] -> b
-foldr = todo
+foldr f ini [] = ini
+foldr f ini (x:xs) = x `f` foldr f ini xs
 
 unfoldr :: (b -> Maybe (a, b)) -> b -> [a]
-unfoldr = todo
+unfoldr f ini = helpFoo (f ini) where
+  helpFoo (Just (x,ini')) = x: unfoldr f ini'
+  helpFoo Nothing         = []
+  
 
 -- Сумма всех элементов списка (пример)
 sum :: [Integer] -> Integer
@@ -30,11 +35,12 @@ reverse lst = foldl f [] lst where f t h = h:t
 
 -- Отображение элементов списка
 map :: (a -> b) -> [a] -> [b]
-map = todo
+map f xs = foldr (\x acc -> f x : acc) [] xs
+
 
 -- Произведение всех элементов списка
 product :: [Integer] -> Integer
-product = todo
+product xs = foldr (*) 1 xs
 
 -- Выделение из списка Maybe всех существующих значений
 catMaybes :: [Maybe a] -> [a]

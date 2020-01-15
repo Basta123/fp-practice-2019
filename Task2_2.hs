@@ -44,29 +44,36 @@ product xs = foldr (*) 1 xs
 
 -- Выделение из списка Maybe всех существующих значений
 catMaybes :: [Maybe a] -> [a]
-catMaybes = todo
+catMaybes l = foldr f [] l
+    where f (Just a) b  = a : b
+          f Nothing b   = b
 
 -- Диагональ матрицы
 diagonal :: [[a]] -> [a]
-diagonal = todo
+diagonal xs = foldr f [] xs
+    where f x s = x !! (length xs - length s - 1) : s
 
 -- Фильтр для всех элементов, не соответствующих предикату
 filterNot :: (a -> Bool) -> [a] -> [a]
-filterNot = todo
+filterNot f xs = foldr (\x -> \acc -> if f x then acc else x : acc) [] xs
 
 -- Поиск элемента в списке
 elem :: (Eq a) => a -> [a] -> Bool
-elem = todo
+elem elem' xs = foldr (\x s -> if x == elem' then True else s) False xs
 
 -- Список чисел в диапазоне [from, to) с шагом step
 rangeTo :: Integer -> Integer -> Integer -> [Integer]
-rangeTo from to step = todo
+rangeTo from to step = unfoldr f from
+    where f from | from < to = Just (from, from + step)
+                 | otherwise = Nothing 
 
 -- Конкатенация двух списков
 append :: [a] -> [a] -> [a]
-append = todo
+append xs1 xs2 = foldr (:) xs1 xs2 
 
 -- Разбиение списка lst на куски размером n
 -- (последний кусок может быть меньше)
 groups :: [a] -> Integer -> [[a]]
-groups lst n = todo
+groups xs num = unfoldr foo xs 
+    where foo []   = Nothing
+          foo xs = Just (take (fromIntegral num) xs, drop (fromIntegral num) xs)

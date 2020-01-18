@@ -25,9 +25,10 @@ emptyTree = Nothing
    
          
 contains :: TreeMap v -> Integer -> Bool
+contains Nothing _ = False
 contains (Node key _ leftNode rightNode) specifiedKey = let {goRight = contains rightNode specifiedKey; goLeft = contains leftNode specifiedKey} in 
-                                                        if key == specifiedKey then True else if key < specifiedKey then goRight else goLeft
-contains _ _ = False
+                                                        if key == specifiedKey then True else if key > specifiedKey then goRight else goLeft
+
   
 
 
